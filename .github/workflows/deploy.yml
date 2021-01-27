@@ -17,3 +17,5 @@ jobs:
         key: ${{ secrets.CSGO_KEY }}
         source: "cfg/*.cfg"
         target: "test"
+        overwrite: true
+        debug: true
