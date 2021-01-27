@@ -1,10 +1,30 @@
-# For projects using Nanoc (http://nanoc.ws/)
 
-# Default location for output (needs to match output_dir's value found in nanoc.yaml)
-output/
 
 # Temporary file directory
-tmp/nanoc/
+tmp/
+_obj
+_test
 
-# Crash Log
-crash.log
+# Editor Backup Files
+*.bak
+*~
+
+# Editor Settings
+.idea/
+.vscode
+
+# Generated stuff
+README.html
+
+
+# Binary or moreorless binary stuff
+*.exe
+*.test
+*.prof
+
+# OSX nonsense
+.DS_Store
+ehthumbs.db
+Thumbs.db
+Icon?
+
