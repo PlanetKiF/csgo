@@ -1,12 +1,13 @@
 name: Copy files to CSGO Server
-on: workflow_dispatch
-#on: 
-#    push:
-#      branches:
-#        - main
+on: 
+  # manual trigger on https://github.com/PlanetKiF/csgo/actions?query=workflow:%22Copy+files+to+CSGO+Server%22
+  workflow_dispatch:
+  # every push triggers this workflow
+  push:
+    branches:
+      - main
 
 jobs:
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
