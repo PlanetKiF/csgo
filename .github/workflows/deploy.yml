@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@master
-        - run: ls -R ~/cfg
+        - run: ls -R cfg
         - name: copy files via ssh key
           uses:  appleboy/scp-action@v0.1.1
           # https://github.com/marketplace/actions/scp-command-to-transfer-files
