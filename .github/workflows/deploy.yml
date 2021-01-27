@@ -9,16 +9,25 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@master
-        - run: ls -R cfg
-        - name: copy files via ssh key
-          uses:  appleboy/scp-action@v0.1.1
-          # https://github.com/marketplace/actions/scp-command-to-transfer-files
-          with:
-            host: ${{ secrets.CSGO_HOST }}
-            username: ${{ secrets.CSGO_USERNAME }}
-            key: ${{ secrets.CSGO_KEY }}
-            source: "cfg/*.cfg"
-            target: "test"
-            overwrite: true
-            debug: true
+    - name: Public IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+      # https://github.com/marketplace/actions/public-ip
+    - name: Print Public IP
+      run: |
+        echo ${{ steps.ip.outputs.ipv4 }}
+        echo ${{ steps.ip.outputs.ipv6 }}
+
+    - uses: actions/checkout@master
+
+    - name: copy files via ssh key
+      uses:  appleboy/scp-action@v0.1.1
+      # https://github.com/marketplace/actions/scp-command-to-transfer-files
+      with:
+        host: ${{ secrets.CSGO_HOST }}
+        username: ${{ secrets.CSGO_USERNAME }}
+        key: ${{ secrets.CSGO_KEY }}
+        source: "cfg/*.cfg"
+        target: "test"
+        overwrite: true
+        debug: true
