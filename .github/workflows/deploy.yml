@@ -9,13 +9,16 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: copy files via ssh key
-      uses:  appleboy/scp-action@v0.1.1
-      with:
-        host: ${{ secrets.CSGO_HOST }}
-        username: ${{ secrets.CSGO_USERNAME }}
-        key: ${{ secrets.CSGO_KEY }}
-        source: "cfg/*.cfg"
-        target: "test"
-        overwrite: true
-        debug: true
+        - uses: actions/checkout@master
+        - run: ls -R ~/cfg
+        - name: copy files via ssh key
+          uses:  appleboy/scp-action@v0.1.1
+          # https://github.com/marketplace/actions/scp-command-to-transfer-files
+          with:
+            host: ${{ secrets.CSGO_HOST }}
+            username: ${{ secrets.CSGO_USERNAME }}
+            key: ${{ secrets.CSGO_KEY }}
+            source: "cfg/*.cfg"
+            target: "test"
+            overwrite: true
+            debug: true
