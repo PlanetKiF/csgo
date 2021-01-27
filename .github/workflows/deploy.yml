@@ -15,5 +15,5 @@ jobs:
         host: ${{ secrets.CSGO_HOST }}
         username: ${{ secrets.CSGO_USERNAME }}
         key: ${{ secrets.CSGO_KEY }}
-        source: "cfg/*"
+        source: "cfg/*.cfg"
         target: "test"
