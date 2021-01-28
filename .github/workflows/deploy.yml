@@ -1,5 +1,5 @@
 name: Copy files to CSGO Server
-on: 
+on:
   # manual trigger on https://github.com/PlanetKiF/csgo/actions?query=workflow:%22Copy+files+to+CSGO+Server%22
   workflow_dispatch:
   # every push triggers this workflow
@@ -30,7 +30,7 @@ jobs:
         host: ${{ secrets.CSGO_HOST }}
         username: ${{ secrets.CSGO_USERNAME }}
         key: ${{ secrets.CSGO_KEY }}
-        source: "cfg/*.cfg"
+        source: "csgo/*"
         target: "test"
         overwrite: true
         debug: true
