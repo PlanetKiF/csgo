@@ -12,8 +12,13 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+
+    ########################################################################################
+    # Check out latest source
     - uses: actions/checkout@master
 
+    ########################################################################################
+    # Sets date/time
     - name: Get current time
       uses: 1466587594/get-current-time@v2
       id: current-time
@@ -29,7 +34,9 @@ jobs:
     #    DAY: "${{ steps.current-time.outputs.day }}"
     #  run: echo $TIME $R_TIME $F_TIME $YEAR $DAY
     #  # 2021-01-29T12:01:16.207Z Fri Jan 29 2021 12:01:16 GMT+0000 20210129-12 2021 29
-          
+
+    ########################################################################################
+    # Replaces secrets / time in checkout files
     - name: Find and Replace date/time
       uses: jacobtomlinson/gha-find-replace@master
       with:
@@ -48,8 +55,15 @@ jobs:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
         include: "csgo/"
+    - name: Find and Replace server password
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%STEAM_ACCOUNT%"
+        replace: "${{ secrets.STEAM_ACCOUNT }}"
+        include: "csgo/"
 
-
+    ########################################################################################
+    # Copies to cs server
     - name: copy files via ssh key
       uses:  appleboy/scp-action@v0.1.1
       # https://github.com/marketplace/actions/scp-command-to-transfer-files
@@ -62,6 +76,8 @@ jobs:
         overwrite: true
         debug: false
 
+    ########################################################################################
+    # Informs slack channel
     - uses: 8398a7/action-slack@v3
       with:
         job_name: Deploy # Match the name above.
