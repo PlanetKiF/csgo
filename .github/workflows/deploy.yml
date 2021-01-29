@@ -28,9 +28,11 @@ jobs:
 
     - uses: 8398a7/action-slack@v3
       with:
+        job_name: Deploy # Match the name above.
         status: ${{ job.status }}
         #fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         fields: message,commit,author,took # selectable (default: repo,message)
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
       if: always() # Pick up events even if the job fails or is canceled.
