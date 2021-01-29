@@ -12,15 +12,6 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Public IP
-      id: ip
-      uses: haythem/public-ip@v1.2
-      # https://github.com/marketplace/actions/public-ip
-    - name: Print Public IP
-      run: |
-        echo ${{ steps.ip.outputs.ipv4 }}
-        echo ${{ steps.ip.outputs.ipv6 }}
-
     - uses: actions/checkout@master
 
     - name: copy files via ssh key
