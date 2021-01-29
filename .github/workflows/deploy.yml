@@ -15,13 +15,13 @@ jobs:
     - uses: actions/checkout@master
       
     - name: Find and Replace rcon password
-      uses: jacobtomlinson/gha-find-replace@v0.1.2
+      uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%RCON_PASSWORD%"
         replace: "${{ secrets.RCON_PASSWORD }}"
         include: "csgo/"
     - name: Find and Replace server password
-      uses: jacobtomlinson/gha-find-replace@v0.1.2
+      uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
