@@ -19,21 +19,24 @@ jobs:
 
     ########################################################################################
     # Sets date/time
-    - name: Get current time
-      uses: 1466587594/get-current-time@v2
-      id: current-time
-      with:
-        format: YYYYMMDD-HH
-        # utcOffset: "+08:00"
-    #- name: Use current time
-    #  env:
-    #    TIME: "${{ steps.current-time.outputs.time }}"
-    #    R_TIME: "${{ steps.current-time.outputs.readableTime }}"
-    #    F_TIME: "${{ steps.current-time.outputs.formattedTime }}"
-    #    YEAR: "${{ steps.current-time.outputs.year }}"
-    #    DAY: "${{ steps.current-time.outputs.day }}"
-    #  run: echo $TIME $R_TIME $F_TIME $YEAR $DAY
-    #  # 2021-01-29T12:01:16.207Z Fri Jan 29 2021 12:01:16 GMT+0000 20210129-12 2021 29
+    - name: Get current date
+      id: date
+      run: echo "KIFCLAN_DATE=$(date +'%a, %d.%m.%Y %H:%M:%S %Z')" >> $GITHUB_ENV
+    #- name: Get current time
+    #  uses: 1466587594/get-current-time@v2
+    #  id: current-time
+    #  with:
+    #    format: YYYYMMDD-HH
+    #    # utcOffset: "+08:00"
+    ##- name: Use current time
+    ##  env:
+    ##    TIME: "${{ steps.current-time.outputs.time }}"
+    ##    R_TIME: "${{ steps.current-time.outputs.readableTime }}"
+    ##    F_TIME: "${{ steps.current-time.outputs.formattedTime }}"
+    ##    YEAR: "${{ steps.current-time.outputs.year }}"
+    ##    DAY: "${{ steps.current-time.outputs.day }}"
+    ##  run: echo $TIME $R_TIME $F_TIME $YEAR $DAY
+    ##  # 2021-01-29T12:01:16.207Z Fri Jan 29 2021 12:01:16 GMT+0000 20210129-12 2021 29
 
     ########################################################################################
     # Replaces secrets / time in checkout files
@@ -41,7 +44,7 @@ jobs:
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%DATE_TIME%"
-        replace: "${{ steps.current-time.outputs.time }}"
+        replace: "${{ env.KIFCLAN_DATE }}"
         include: "csgo/"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@master
