@@ -13,6 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+      
+    - name: Find and Replace rcon password
+      uses: jacobtomlinson/gha-find-replace@v0.1.2
+      with:
+        find: "${{ RCON_PASSWORD }}"
+        replace: "${{ secrets.rcon_PASSWORD }}"
+        include: "csgo/"
+    - name: Find and Replace server password
+      uses: jacobtomlinson/gha-find-replace@v0.1.2
+      with:
+        find: "${{ SERVER_PASSWORD }}"
+        replace: "${{ secrets.SERVER_PASSWORD }}"
+        include: "csgo/"
+
 
     - name: copy files via ssh key
       uses:  appleboy/scp-action@v0.1.1
