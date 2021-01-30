@@ -94,7 +94,7 @@ jobs:
       uses: Burnett01/rsync-deployments@4.1
             # https://github.com/marketplace/actions/rsync-deployments-action
       with:
-        switches: -avzr -exclude=.git/ --dry-run
+        switches: -avzr --exclude=.git/ --exclude=.git* --dry-run
         path: "."
         remote_path: /home/${{ secrets.CSGO_USERNAME }}/
         remote_host: ${{ secrets.CSGO_HOST }}
