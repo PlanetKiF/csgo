@@ -79,18 +79,27 @@ jobs:
 
     ########################################################################################
     # Copies to cs server
-    - name: copy files via ssh key
-      uses:  appleboy/scp-action@v0.1.1
-      # https://github.com/marketplace/actions/scp-command-to-transfer-files
+    #- name: copy files via ssh key
+    #  uses:  appleboy/scp-action@v0.1.1
+    #  # https://github.com/marketplace/actions/scp-command-to-transfer-files
+    #  with:
+    #    host: ${{ secrets.CSGO_HOST }}
+    #    username: ${{ secrets.CSGO_USERNAME }}
+    #    key: ${{ secrets.CSGO_KEY }}
+    #    source: "*"
+    #    target: "/home/ubuntu/"
+    #    overwrite: true
+    #    debug: false
+    - name: Copy single file to remote
+      uses: garygrossgarten/github-action-scp@release
+      # https://github.com/marketplace/actions/copy-via-ssh
       with:
+        local: "."
+        remote: "/home/ubuntu/"
         host: ${{ secrets.CSGO_HOST }}
         username: ${{ secrets.CSGO_USERNAME }}
-        key: ${{ secrets.CSGO_KEY }}
-        source: "*"
-        target: "/home/ubuntu/"
-        overwrite: true
-        debug: false
-
+        privateKey: ${{ secrets.CSGO_KEY }}
+        dotfiles: false
     ########################################################################################
     # Informs slack channel
     - uses: 8398a7/action-slack@v3
