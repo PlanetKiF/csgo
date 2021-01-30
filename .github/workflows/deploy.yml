@@ -1,6 +1,6 @@
-name: Copy files to csgosv Server
+name: Copy files to CSGO Server
 on:
-  # manual trigger on https://github.com/PlanetKiF/csgosv/actions?query=workflow:%22Copy+files+to+csgosv+Server%22
+  # manual trigger on https://github.com/PlanetKiF/csgo/actions?query=workflow:%22Copy+files+to+csgo+Server%22
   workflow_dispatch:
   # every push triggers this workflow
   push:
