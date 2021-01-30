@@ -81,7 +81,7 @@ jobs:
         username: ${{ secrets.csgosv_USERNAME }}
         key: ${{ secrets.csgosv_KEY }}
         source: "*"
-        target: "~/"
+        target: "/home/ubuntu"
         overwrite: true
         debug: false
 
