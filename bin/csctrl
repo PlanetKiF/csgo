@@ -27,7 +27,10 @@ case "$1" in
     #   ;;
     restart)
        stop
-    #   start || cs restarts automatically in case of a kill
+    #   start # cs restarts automatically in case of a kill
+       ;;
+    kill)
+       kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
        ;;
     status)
        # code to check status of app comes here

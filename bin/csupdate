@@ -1,2 +1,0 @@
-#!/bin/sh
-steamcmd +login anonymous +force_install_dir /home/ubuntu/csgosv +app_update 740 +quit
