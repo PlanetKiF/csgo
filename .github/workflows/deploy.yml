@@ -87,7 +87,7 @@ jobs:
     #    username: ${{ secrets.CSGO_USERNAME }}
     #    key: ${{ secrets.CSGO_KEY }}
     #    source: "*"
-    #    target: "/home/ubuntu/"
+    #    target: "/home/${{ secrets.CSGO_USERNAME }}/"
     #    overwrite: true
     #    debug: false
     - name: Rsync Deployments Action
@@ -96,7 +96,7 @@ jobs:
       with:
         switches: -avzr -exclude=.git/ --dry-run
         path: "."
-        remote_path: "/home/${{ secrets.CSGO_USERNAME }}/"
+        remote_path: /home/${{ secrets.CSGO_USERNAME }}/
         remote_host: ${{ secrets.CSGO_HOST }}
         remote_user: ${{ secrets.CSGO_USERNAME }}
         remote_key: ${{ secrets.CSGO_KEY }}
