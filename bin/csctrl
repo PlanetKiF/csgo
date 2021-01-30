@@ -13,7 +13,7 @@ stop() {
     # code to stop app comes here
     # example: killproc program_name
     steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
-    kill -9 < ${CSGODIR}/csgosv.pid
+    kill -9 $(cat ${CSGODIR}/csgosv.pid)
 }
 
 
@@ -22,20 +22,25 @@ case "$1" in
     start)
        start
        ;;
-    stop)
-       stop
-       ;;
+    #stop)
+    #   stop
+    #   ;;
     restart)
        stop
-       start
+    #   start || cs restarts automatically in case of a kill
        ;;
     status)
        # code to check status of app comes here
        # example: status program_name
        steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
        ;;
+    update)
+       # code to check status of app comes here
+       # example: status program_name
+       steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+       ;;
     *)
-       echo "Usage: $0 {start|stop|status|restart}"
+       echo "Usage: $0 {start|restart|status|update}"
 esac
 
 exit 0
