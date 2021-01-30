@@ -90,16 +90,17 @@ jobs:
     #    target: "/home/ubuntu/"
     #    overwrite: true
     #    debug: false
-    - name: Copy single file to remote
-      uses: garygrossgarten/github-action-scp@release
-      # https://github.com/marketplace/actions/copy-via-ssh
+    - name: Rsync Deployments Action
+      uses: Burnett01/rsync-deployments@4.1
+            # https://github.com/marketplace/actions/rsync-deployments-action
       with:
-        local: "."
-        remote: "/home/${{ secrets.CSGO_USERNAME }}/"
-        host: ${{ secrets.CSGO_HOST }}
-        username: ${{ secrets.CSGO_USERNAME }}
-        privateKey: ${{ secrets.CSGO_KEY }}
-        dotfiles: false
+        switches: -avzr -exclude=.git/ --dry-run
+        path: "."
+        remote_path: "/home/${{ secrets.CSGO_USERNAME }}/"
+        remote_host: ${{ secrets.CSGO_HOST }}
+        remote_user: ${{ secrets.CSGO_USERNAME }}
+        remote_key: ${{ secrets.CSGO_KEY }}
+
     ########################################################################################
     # Informs slack channel
     - uses: 8398a7/action-slack@v3
