@@ -1,0 +1,41 @@
+#!/bin/bash
+
+USER=%CSGO_USERNAME%
+CSGODIR=/home/${USER}/csgosv
+
+start() {
+    # code to start app comes here
+    # example: daemon program_name &
+    ${CSGODIR}/srcds_run -game csgo +game_type 0 +game_mode 0 -tickrate 128 -usercon +mapgroup mg_active +map cs_office -pidfile ${CSGODIR}/csgosv.pid
+}
+
+stop() {
+    # code to stop app comes here
+    # example: killproc program_name
+    steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
+    kill -9 < ${CSGODIR}/csgosv.pid
+}
+
+
+
+case "$1" in
+    start)
+       start
+       ;;
+    stop)
+       stop
+       ;;
+    restart)
+       stop
+       start
+       ;;
+    status)
+       # code to check status of app comes here
+       # example: status program_name
+       echo steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
+       ;;
+    *)
+       echo "Usage: $0 {start|stop|status|restart}"
+esac
+
+exit 0
