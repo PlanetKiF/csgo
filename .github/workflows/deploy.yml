@@ -77,11 +77,11 @@ jobs:
       uses:  appleboy/scp-action@v0.1.1
       # https://github.com/marketplace/actions/scp-command-to-transfer-files
       with:
-        host: ${{ secrets.csgosv_HOST }}
-        username: ${{ secrets.csgosv_USERNAME }}
-        key: ${{ secrets.csgosv_KEY }}
+        host: ${{ secrets.CSGO_HOST }}
+        username: ${{ secrets.CSGO_USERNAME }}
+        key: ${{ secrets.CSGO_KEY }}
         source: "*"
-        target: "/home/ubuntu"
+        target: "/home/ubuntu/"
         overwrite: true
         debug: false
 
