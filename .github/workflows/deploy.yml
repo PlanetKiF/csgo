@@ -46,6 +46,12 @@ jobs:
         find: "%DATE_TIME%"
         replace: "${{ env.KIFCLAN_DATE }}"
         include: "csgosv/"
+    - name: Find and Replace username in scripts
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%CSGO_USERNAME%"
+        replace: "${{ secrets.CSGO_USERNAME }}"
+        include: "bin/"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@master
       with:
