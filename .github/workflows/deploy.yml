@@ -12,17 +12,61 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Public IP
-      id: ip
-      uses: haythem/public-ip@v1.2
-      # https://github.com/marketplace/actions/public-ip
-    - name: Print Public IP
-      run: |
-        echo ${{ steps.ip.outputs.ipv4 }}
-        echo ${{ steps.ip.outputs.ipv6 }}
 
+    ########################################################################################
+    # Check out latest source
     - uses: actions/checkout@master
 
+    ########################################################################################
+    # Sets date/time
+    - name: Get current date
+      id: date
+      run: echo "KIFCLAN_DATE=$(date +'%a, %d.%m.%Y %H:%M:%S %Z')" >> $GITHUB_ENV
+    #- name: Get current time
+    #  uses: 1466587594/get-current-time@v2
+    #  id: current-time
+    #  with:
+    #    format: YYYYMMDD-HH
+    #    # utcOffset: "+08:00"
+    ##- name: Use current time
+    ##  env:
+    ##    TIME: "${{ steps.current-time.outputs.time }}"
+    ##    R_TIME: "${{ steps.current-time.outputs.readableTime }}"
+    ##    F_TIME: "${{ steps.current-time.outputs.formattedTime }}"
+    ##    YEAR: "${{ steps.current-time.outputs.year }}"
+    ##    DAY: "${{ steps.current-time.outputs.day }}"
+    ##  run: echo $TIME $R_TIME $F_TIME $YEAR $DAY
+    ##  # 2021-01-29T12:01:16.207Z Fri Jan 29 2021 12:01:16 GMT+0000 20210129-12 2021 29
+
+    ########################################################################################
+    # Replaces secrets / time in checkout files
+    - name: Find and Replace date/time
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%DATE_TIME%"
+        replace: "${{ env.KIFCLAN_DATE }}"
+        include: "csgo/"
+    - name: Find and Replace rcon password
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%RCON_PASSWORD%"
+        replace: "${{ secrets.RCON_PASSWORD }}"
+        include: "csgo/"
+    - name: Find and Replace server password
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%SERVER_PASSWORD%"
+        replace: "${{ secrets.SERVER_PASSWORD }}"
+        include: "csgo/"
+    - name: Find and Replace server password
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%STEAM_ACCOUNT%"
+        replace: "${{ secrets.STEAM_ACCOUNT }}"
+        include: "csgo/"
+
+    ########################################################################################
+    # Copies to cs server
     - name: copy files via ssh key
       uses:  appleboy/scp-action@v0.1.1
       # https://github.com/marketplace/actions/scp-command-to-transfer-files
@@ -31,6 +75,19 @@ jobs:
         username: ${{ secrets.CSGO_USERNAME }}
         key: ${{ secrets.CSGO_KEY }}
         source: "csgo/*"
-        target: "test"
+        target: "csgosv"
         overwrite: true
-        debug: true
+        debug: false
+
+    ########################################################################################
+    # Informs slack channel
+    - uses: 8398a7/action-slack@v3
+      with:
+        job_name: Deploy # Match the name above.
+        status: ${{ job.status }}
+        #fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+        fields: message,commit,author,took # selectable (default: repo,message)
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
+      if: always() # Pick up events even if the job fails or is canceled.
