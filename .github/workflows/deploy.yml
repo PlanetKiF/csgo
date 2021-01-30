@@ -1,6 +1,6 @@
-name: Copy files to CSGO Server
+name: Copy files to csgosv Server
 on:
-  # manual trigger on https://github.com/PlanetKiF/csgo/actions?query=workflow:%22Copy+files+to+CSGO+Server%22
+  # manual trigger on https://github.com/PlanetKiF/csgosv/actions?query=workflow:%22Copy+files+to+csgosv+Server%22
   workflow_dispatch:
   # every push triggers this workflow
   push:
@@ -45,31 +45,31 @@ jobs:
       with:
         find: "%DATE_TIME%"
         replace: "${{ env.KIFCLAN_DATE }}"
-        include: "csgo/"
+        include: "csgosv/"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%RCON_PASSWORD%"
         replace: "${{ secrets.RCON_PASSWORD }}"
-        include: "csgo/"
+        include: "csgosv/"
     - name: Find and Replace server password
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
-        include: "csgo/"
+        include: "csgosv/"
     - name: Find and Replace server password
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%STEAM_ACCOUNT%"
         replace: "${{ secrets.STEAM_ACCOUNT }}"
-        include: "csgo/"
+        include: "csgosv/"
     - name: Find and Replace webapi_authky password
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%STEAM_WEBAPI_AUTHKEY%"
         replace: "${{ secrets.STEAM_WEBAPI_AUTHKEY }}"
-        include: "csgo/"
+        include: "csgosv/"
 
     ########################################################################################
     # Copies to cs server
@@ -77,11 +77,11 @@ jobs:
       uses:  appleboy/scp-action@v0.1.1
       # https://github.com/marketplace/actions/scp-command-to-transfer-files
       with:
-        host: ${{ secrets.CSGO_HOST }}
-        username: ${{ secrets.CSGO_USERNAME }}
-        key: ${{ secrets.CSGO_KEY }}
-        source: "csgo/*"
-        target: "csgosv"
+        host: ${{ secrets.csgosv_HOST }}
+        username: ${{ secrets.csgosv_USERNAME }}
+        key: ${{ secrets.csgosv_KEY }}
+        source: "*"
+        target: "~/"
         overwrite: true
         debug: false
 
