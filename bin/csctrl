@@ -1,7 +1,7 @@
 #!/bin/bash
 
-USER=%CSGO_USERNAME%
-CSGODIR=/home/${USER}/csgosv
+CSOWNER=%CSGO_USERNAME%
+CSGODIR=/home/${CSOWNER}/csgosv
 
 start() {
     # code to start app comes here
@@ -32,7 +32,7 @@ case "$1" in
     status)
        # code to check status of app comes here
        # example: status program_name
-       echo steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
+       steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
        ;;
     *)
        echo "Usage: $0 {start|stop|status|restart}"

@@ -95,7 +95,7 @@ jobs:
       # https://github.com/marketplace/actions/copy-via-ssh
       with:
         local: "."
-        remote: "/home/ubuntu/"
+        remote: "/home/${{ secrets.CSGO_USERNAME }}/"
         host: ${{ secrets.CSGO_HOST }}
         username: ${{ secrets.CSGO_USERNAME }}
         privateKey: ${{ secrets.CSGO_KEY }}

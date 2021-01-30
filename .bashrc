@@ -128,4 +128,4 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=.:${HOME}/bin:${GOBIN}:$PATH
+export PATH=.:${HOME}/bin:$PATH
