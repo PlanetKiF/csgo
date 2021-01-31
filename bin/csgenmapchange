@@ -1,0 +1,19 @@
+#!/bin/bash
+tmpfile=$(mktemp /tmp/csmapaliases.XXXXXX)
+
+CSOWNER=%CSGO_USERNAME%
+CSGODIR=/home/${CSOWNER}/csgosv
+TARGET=${CSGODIR}/csgo/cfg/mapchange.cfg
+
+
+genal() {
+    MAP=`basename $1`
+    echo alias `basename ${MAP} .bsp` \"rcon changelevel ${MAP}\" >> $2
+}
+
+export -f genal
+export  tmpfile
+
+find ${CSGODIR}/csgo/maps -name *.bsp -exec  bash -c 'genal "$0" ${tmpfile}' {}  \;
+sed -E "s/de_rats_brb /de_rats /" ${tmpfile}| sed -E "s/de_oilrig_go_09 /de_oilrig /" | sed -E "s/de_venezia_4 /de_venezia / " | sed -E "s/dcs_winternights_go_b5 /cs_winternights / " |sort  > ${TARGET}
+rm -f ${tmpfile}
