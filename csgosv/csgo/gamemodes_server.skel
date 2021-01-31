@@ -1,0 +1,50 @@
+"GameModes_Server.txt"
+{
+    "mapgroups"
+    {
+        "mg_kifclassic"
+        {
+            "name" "mg_all"
+            "maps"
+            {
+               //generate start
+                // this will be overwritten on the server
+               //generate end
+            }
+        }
+        "mg_official"
+        {
+            "name" "mg_official"
+            "maps"
+            {
+                "ar_baggage.bsp" ""
+                "ar_monastery.bsp" ""
+                "ar_shoots.bsp" ""
+                "cs_assault.bsp" ""
+                "cs_italy.bsp" ""
+                "cs_militia.bsp" ""
+                "cs_office.bsp" ""
+                "de_bank.bsp" ""
+                "de_cbble.bsp" ""
+                "de_dust.bsp" ""
+                "de_dust2.bsp" ""
+                "de_inferno.bsp" ""
+                "de_lake.bsp" ""
+                "de_mirage.bsp" ""
+                "de_nuke.bsp" ""
+                "de_overpass.bsp" ""
+                "de_safehouse.bsp" ""
+                "de_shorttrain.bsp" ""
+                "de_stmarc.bsp" ""
+                "de_sugarcane.bsp" ""
+                "de_train.bsp" ""
+                "de_vertigo.bsp" ""
+                "dz_blacksite.bsp" ""
+                "dz_frostbite.bsp" ""
+                "dz_sirocco.bsp" ""
+                "gd_cbble.bsp" ""
+                "training1.bsp" ""
+            }
+        }
+    }
+}
