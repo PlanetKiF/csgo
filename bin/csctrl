@@ -14,7 +14,6 @@ stop() {
     # code to stop app comes here
     # example: killproc program_name
     steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
-    kill -9 $(cat ${CSGODIR}/csgosv.pid)
 }
 
 
@@ -26,12 +25,13 @@ case "$1" in
     #stop)
     #   stop
     #   ;;
-    restart)
-       stop
-    #   start # cs restarts automatically in case of a kill
-       ;;
     kill)
        kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
+       ;;
+    restart)
+       stop
+       kill
+    #   start # cs restarts automatically in case of a kill
        ;;
     status)
        # code to check status of app comes here
