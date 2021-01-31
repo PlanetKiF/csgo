@@ -8,7 +8,7 @@ TARGET=${CSGODIR}/csgo/cfg/mapchange.cfg
 
 genal() {
     MAP=`basename $1`
-    echo alias `basename ${MAP} .bsp` \"rcon changelevel ${MAP}\" >> $2
+    echo alias `basename ${MAP} .bsp` \"changelevel ${MAP}\" >> $2
 }
 
 export -f genal
