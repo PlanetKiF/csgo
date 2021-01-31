@@ -18,7 +18,12 @@ stop() {
     steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
 }
 
-
+killer() {
+   if [ "x$1" = "x-f" ];
+     then killall -9 srcds_linux srcds_run
+     else kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
+  fi
+}
 
 case "$1" in
     start)
@@ -28,12 +33,12 @@ case "$1" in
     #   stop
     #   ;;
     kill)
-       kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
+       killer $2
        ;;
     restart)
        stop
-       kill
-    #   start # cs restarts automatically in case of a kill
+       killer
+       # start # cs restarts automatically in case of a kill
        ;;
     status)
        # code to check status of app comes here
