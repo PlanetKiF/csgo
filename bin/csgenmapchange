@@ -15,5 +15,5 @@ export -f genal
 export  tmpfile
 
 find ${CSGODIR}/csgo/maps -name *.bsp -exec  bash -c 'genal "$0" ${tmpfile}' {}  \;
-sed -E "s/de_rats_brb /de_rats /" ${tmpfile}| sed -E "s/de_oilrig_go_09 /de_oilrig /" | sed -E "s/de_venezia_4 /de_venezia / " | sed -E "s/dcs_winternights_go_b5 /cs_winternights / " |sort  > ${TARGET}
+sed -E "s/(ar|cs|de|dz|gd)_//" ${tmpfile} | sed -E "s/de_rats_brb /de_rats /" | sed -E "s/de_oilrig_go_09 /de_oilrig /" | sed -E "s/de_venezia_4 /de_venezia / " | sed -E "s/dcs_winternights_go_b5 /cs_winternights / " |sort  > ${TARGET}
 rm -f ${tmpfile}
