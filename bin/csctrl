@@ -6,10 +6,7 @@ CSGODIR=/home/${CSOWNER}/csgosv
 start() {
     # code to start app comes here
     # example: daemon program_name &
-    #${CSGODIR}/srcds_run -game csgo +game_type 0 +game_mode 0 -tickrate 128 -usercon +mapgroup mg_active +map cs_office -pidfile ${CSGODIR}/csgosv.pid
-    #${CSGODIR}/srcds_run -game csgo +game_type 0 +game_mode 0 -tickrate 128 -usercon +mapgroup mg_active +host_workshop_map 125444404 -pidfile ${CSGODIR}/csgosv.pid
-    #Ciske: +vars verschoben autoexec.cfg, -hltv hinzugefügt
-    ${CSGODIR}/srcds_run -game csgo -usercon -hltv +mapgroup mg_active +host_workshop_map 125444404 -pidfile ${CSGODIR}/csgosv.pid
+    ${CSGODIR}/srcds_run -game csgo -usercon -hltv +host_workshop_map 125444404 -pidfile ${CSGODIR}/csgosv.pid
 }
 
 stop() {
