@@ -6,6 +6,7 @@ CSGODIR=/home/${CSOWNER}/csgosv
 start() {
     # code to start app comes here
     # example: daemon program_name &
+    /home/${CSOWNER}/bin/csgenmapchange
     ${CSGODIR}/srcds_run -game csgo -usercon -hltv +host_workshop_map 125444404 -pidfile ${CSGODIR}/csgosv.pid
 }
 
@@ -13,6 +14,7 @@ stop() {
     # code to stop app comes here
     # example: killproc program_name
     steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
+    killer -f
 }
 
 killer() {
@@ -34,8 +36,7 @@ case "$1" in
        ;;
     restart)
        stop
-       killer
-       # start # cs restarts automatically in case of a kill
+       start # cs restarts automatically in case of a kill
        ;;
     status)
        # code to check status of app comes here
