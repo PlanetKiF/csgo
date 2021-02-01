@@ -4,16 +4,12 @@ CSOWNER=%CSGO_USERNAME%
 CSGODIR=/home/${CSOWNER}/csgosv
 
 start() {
-    # code to start app comes here
-    # example: daemon program_name &
-    /home/${CSOWNER}/bin/csgenmapchange
-    /home/${CSOWNER}/bin/csgenmapgroups
-    ${CSGODIR}/srcds_run -game csgo -usercon -hltv +host_workshop_map 125444404 -pidfile ${CSGODIR}/csgosv.pid
+    /home/${CSOWNER}/bin/csgenmapchange   # generate the mapchange.cfg with convenience aliases
+    #/home/${CSOWNER}/bin/csgenmapgroups   # generate a mapgroup for all files. Probably not needed when subscribing to a workshop collection
+    ${CSGODIR}/srcds_run -game csgo -usercon -hltv  +game_type 0 +game_mode 0 +host_workshop_collection 2187570436 +workshop_start_map 125444404 +sv_pure 1 -pidfile ${CSGODIR}/csgosv.pid
 }
 
 stop() {
-    # code to stop app comes here
-    # example: killproc program_name
     steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
     killer -f
 }
@@ -29,28 +25,27 @@ case "$1" in
     start)
        start
        ;;
-    #stop)
-    #   stop
-    #   ;;
+    stop)
+       stop
+       ;;
     kill)
        killer $2
        ;;
     restart)
        stop
-       start # cs restarts automatically in case of a kill
+       start
        ;;
     status)
-       # code to check status of app comes here
-       # example: status program_name
        steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
        ;;
     update)
-       # code to check status of app comes here
-       # example: status program_name
-       steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+       if [ "x$1" = "x-f" ];
+         then steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
+         else steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+      fi
        ;;
     *)
-       echo "Usage: $0 {start|restart|status|update}"
+       echo "Usage: $0 {start|stop|restart|status|update}"
 esac
 
 exit 0
