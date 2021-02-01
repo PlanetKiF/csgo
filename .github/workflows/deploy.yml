@@ -52,6 +52,12 @@ jobs:
         find: "%CSGO_USERNAME%"
         replace: "${{ secrets.CSGO_USERNAME }}"
         include: "bin/"
+    - name: Find and Replace the workshop map collection id in scripts and configs
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%STEAM_WORKSHOP_COLLECTION_ID%"
+        replace: "${{ secrets.STEAM_WORKSHOP_COLLECTION_ID }}"
+        include: "bin/|csgosv/"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@master
       with:

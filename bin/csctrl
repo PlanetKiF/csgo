@@ -6,7 +6,7 @@ CSGODIR=/home/${CSOWNER}/csgosv
 start() {
     /home/${CSOWNER}/bin/csgenmapchange   # generate the mapchange.cfg with convenience aliases
     #/home/${CSOWNER}/bin/csgenmapgroups   # generate a mapgroup for all files. Probably not needed when subscribing to a workshop collection
-    ${CSGODIR}/srcds_run -game csgo -usercon -hltv  +game_type 0 +game_mode 0 +host_workshop_collection 2187570436 +workshop_start_map 125444404 +sv_pure 1 -pidfile ${CSGODIR}/csgosv.pid
+    ${CSGODIR}/srcds_run -game csgo -usercon -hltv  +game_type 0 +game_mode 0 +host_workshop_collection %STEAM_WORKSHOP_COLLECTION_ID% +workshop_start_map 125444404 +sv_pure 1 -pidfile ${CSGODIR}/csgosv.pid
 }
 
 stop() {
@@ -39,7 +39,7 @@ case "$1" in
        steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
        ;;
     update)
-       if [ "x$1" = "x-f" ];
+       if [ "x$2" = "x-f" ];
          then steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
          else steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
       fi
