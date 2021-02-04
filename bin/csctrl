@@ -2,6 +2,7 @@
 
 CSOWNER=%CSGO_USERNAME%
 CSGODIR=/home/${CSOWNER}/csgosv
+STEAMCMD=/usr/games/steamcmd
 RCODE=0
 
 start() {
@@ -11,7 +12,7 @@ start() {
 }
 
 stop() {
-    steamcmd +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
+    ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
     RCODE=$?
     killer -f
 }
@@ -24,14 +25,24 @@ killer() {
 }
 
 
-upgrade() { # autoupdate & restarts script, needs to be run as root -> root's crontab
+update() {
+   if [ "x$1" == "x-f" ];
+     then ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
+         RCODE=$?
+     else ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+         RCODE=$?
+    fi
+}
+
+upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Works for as long as there is no sudo passwd
    update -f
-   if [ RCODE == 0];
-     then echo sudo shutdown -r now
-      echo "`date`  CS updated, restarting instance..." >> /home/ubuntu/updatelog.txt
-     else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> /home/ubuntu/updatelog.txt
+   if [ x${RCODE} == x0 ];
+     then echo "`date`  CS updated, restarting instance..." >> /home/${CSOWNER}/updatelog.txt
+         sudo shutdown -r now
+     else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> /home/${CSOWNER}/updatelog.txt
    fi
 }
+
 
 
 
@@ -50,21 +61,16 @@ case "$1" in
        start
        ;;
     status)
-       steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
+       ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
        ;;
     update)
-       if [ "x$2" == "x-f" ];
-         then steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
-           RCODE=$?
-         else steamcmd +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
-           RCODE=$?
-      fi
+       update $2
        ;;
     upgrade)
        upgrade
        ;;
     *)
-       echo "Usage: $0 {start|stop|restart|status|update}"
+       echo "Usage: $0 {start|stop|restart|status|update|upgrade}"
 esac
 
 exit 0
