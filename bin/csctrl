@@ -87,7 +87,7 @@ upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Work
      then echo "`date`  CS updated, restarting instance..." >> /home/${CSOWNER}/updatelog.txt
          sudo shutdown -r now
      else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> ${LOGFILE}
-        notifySlack "Error on CS Server during update."
+        notifySlack 'Error on CS Server during update. (Script `csctrl`)'
    fi
 }
 

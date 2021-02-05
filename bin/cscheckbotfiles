@@ -59,7 +59,7 @@ if [ -z "${DIFFRENCES}" ];
      if [ -n "${DIFFRENCES2}" ];
        then MESSAGE="$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
           echo "${MESSAGE}" >> ${LOGFILE}
-          notifySlack "Error on CS Server: script `cscheckbotfiles`."
+          notifySlack 'Error on CS Server: script `cscheckbotfiles`.'
      fi
 fi
 
