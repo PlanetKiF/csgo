@@ -8,7 +8,6 @@ EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 LOGFILE=/home/${CSOWNER}/updatelog.txt
 
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})
-echo $DIFFERENCES
 
 if [ -z "${DIFFRENCES}" ];
   then cp -f ${SOURCE} ${TARGET}
