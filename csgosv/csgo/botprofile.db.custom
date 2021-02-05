@@ -2,10 +2,10 @@
 // BotProfile.db
 // Author: Michael S. Booth, Turtle Rock Studios (www.turtlerockstudios.com)
 //
-// This database defines bot "personalities". 
+// This database defines bot "personalities".
 // Feel free to edit it and define your own bots.
 //
-// Modified for KiF Server %DATE_TIME%
+// Modified for KiF Server (don't use the date-macro here as this conflicts with the update check)
 
 //----------------------------------------------------------------------------
 
@@ -252,11 +252,11 @@ Template KiF
 	AimFocusOffsetScale = 0.025		// controls accuracy when tracking to target (0 == perfect, should always be < 1)
 	AimfocusInterval = 0.025			// how often focus is adjusted (smaller intervals means better movement tracking)
 	Cost = 4
-	Difficulty = Expert	
+	Difficulty = Expert
 End
 //----------------------------------------------------------------------------
 //
-// These are the individual bot profiles, which inherit first from 
+// These are the individual bot profiles, which inherit first from
 // Default and then the specified Template(s), in order
 //
 
@@ -275,7 +275,7 @@ Elite+KiFGuns "Cisco Kid"
 	AimFocusOffsetScale = 0.025		// controls accuracy when tracking to target (0 == perfect, should always be < 1)
 	AimfocusInterval = 0.025			// how often focus is adjusted (smaller intervals means better movement tracking)
 	Cost = 4
-	Difficulty = Expert	
+	Difficulty = Expert
 End
 
 Elite+Rifle "Jim Knopf"
