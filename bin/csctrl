@@ -14,12 +14,13 @@ notifySlack() {
   UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
 
   curl -X POST -H 'Content-type: application/json' --data "{
+      \"text\": \":bomb: ${SLACKTEXT}\",
       \"blocks\": [
           {
               \"type\": \"section\",
               \"text\": {
                   \"type\": \"mrkdwn\",
-                  \"text\": \"${SLACKTEXT}\"
+                  \"text\": \":bomb: ${SLACKTEXT}\"
               }
           },
           {
@@ -87,7 +88,7 @@ upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Work
      then echo "`date`  CS updated, restarting instance..." >> /home/${CSOWNER}/updatelog.txt
          sudo shutdown -r now
      else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> ${LOGFILE}
-        notifySlack 'Error on CS Server during update. (Script `csctrl`)'
+        notifySlack '*Error on CS Server during update. (Script `csctrl`)*'
    fi
 }
 

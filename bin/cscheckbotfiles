@@ -14,12 +14,13 @@ notifySlack() {
   UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
 
   curl -X POST -H 'Content-type: application/json' --data "{
+      \"text\": \":bomb: ${SLACKTEXT}\",
       \"blocks\": [
           {
               \"type\": \"section\",
               \"text\": {
                   \"type\": \"mrkdwn\",
-                  \"text\": \"${SLACKTEXT}\"
+                  \"text\": \":bomb: ${SLACKTEXT}\"
               }
           },
           {
@@ -59,7 +60,7 @@ if [ -z "${DIFFRENCES}" ];
      if [ -n "${DIFFRENCES2}" ];
        then MESSAGE="$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
           echo "${MESSAGE}" >> ${LOGFILE}
-          notifySlack 'Error on CS Server: script `cscheckbotfiles`.'
+          notifySlack '*Error on CS Server: script `cscheckbotfiles`.*'
      fi
 fi
 
