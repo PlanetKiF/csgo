@@ -1,18 +1,19 @@
 #!/bin/bash
-tmpfile=$(mktemp /tmp/csmapaliases.XXXXXX)
 
 CSOWNER=%CSGO_USERNAME%
 CSGODIR=/home/${CSOWNER}/csgosv
-SOURCE=${CSGODIR}/csgo/cfg/botprofile.db.custom
-TARGET=${CSGODIR}/csgo/cfg/botprofile.db
-EXPECTED=${CSGODIR}/csgo/cfg/botprofile.db.lastorig
+SOURCE=${CSGODIR}/csgo/botprofile.db.custom
+TARGET=${CSGODIR}/csgo/botprofile.db
+EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 LOGFILE=/home/${CSOWNER}/updatelog.txt
 
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})
+echo $DIFFERENCES
 
-if [ -ne ${DIFFRENCES} ];
-    then echo "$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)" >> ${LOGFILE}
-    else echo cp -f ${SOURCE} ${TARGET}
+if [ -z "${DIFFRENCES}" ];
+  then cp -f ${SOURCE} ${TARGET}
+  else  DIFFRENCES2=$(diff ${SOURCE} ${TARGET})
+     if [ -n "${DIFFRENCES2}" ];
+       then echo "$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)" >> ${LOGFILE}
+     fi
 fi
-
-
