@@ -4,6 +4,52 @@ CSOWNER=%CSGO_USERNAME%
 CSGODIR=/home/${CSOWNER}/csgosv
 STEAMCMD=/usr/games/steamcmd
 RCODE=0
+LOGFILE=/home/${CSOWNER}/updatelog.txt
+
+
+
+notifySlack() {
+
+  SLACKTEXT="$1"
+  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+
+  curl -X POST -H 'Content-type: application/json' --data "{
+      \"blocks\": [
+          {
+              \"type\": \"section\",
+              \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"${SLACKTEXT}\"
+              }
+          },
+          {
+              \"type\": \"divider\"
+          },
+          {
+              \"type\": \"context\",
+              \"elements\": [
+                  {
+                      \"type\": \"plain_text\",
+                      \"text\": \"tail -3 updatelog.txt\",
+                      \"emoji\": true
+                  }
+              ]
+          },
+          {
+              \"type\": \"section\",
+              \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"\`\`\`${UPDATELOG}\`\`\`\"
+              }
+          },
+          {
+              \"type\": \"divider\"
+          }
+      ]
+   }" %SLACK_INFORMER_WEBHOOK%
+}
+
+
 
 start() {
     /home/${CSOWNER}/bin/csgenmapchange   # generate the mapchange.cfg with convenience aliases
@@ -40,7 +86,8 @@ upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Work
    if [ x${RCODE} == x0 ];
      then echo "`date`  CS updated, restarting instance..." >> /home/${CSOWNER}/updatelog.txt
          sudo shutdown -r now
-     else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> /home/${CSOWNER}/updatelog.txt
+     else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> ${LOGFILE}
+        notifySlack "Error on CS Server during update."
    fi
 }
 

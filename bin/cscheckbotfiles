@@ -7,12 +7,60 @@ TARGET=${CSGODIR}/csgo/botprofile.db
 EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 LOGFILE=/home/${CSOWNER}/updatelog.txt
 
+
+notifySlack() {
+
+  SLACKTEXT="$1"
+  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+
+  curl -X POST -H 'Content-type: application/json' --data "{
+      \"blocks\": [
+          {
+              \"type\": \"section\",
+              \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"${SLACKTEXT}\"
+              }
+          },
+          {
+              \"type\": \"divider\"
+          },
+          {
+              \"type\": \"context\",
+              \"elements\": [
+                  {
+                      \"type\": \"plain_text\",
+                      \"text\": \"tail -3 updatelog.txt\",
+                      \"emoji\": true
+                  }
+              ]
+          },
+          {
+              \"type\": \"section\",
+              \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"\`\`\`${UPDATELOG}\`\`\`\"
+              }
+          },
+          {
+              \"type\": \"divider\"
+          }
+      ]
+   }" %SLACK_INFORMER_WEBHOOK%
+}
+
+
+
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})
 
 if [ -z "${DIFFRENCES}" ];
   then cp -f ${SOURCE} ${TARGET}
   else  DIFFRENCES2=$(diff ${SOURCE} ${TARGET})
      if [ -n "${DIFFRENCES2}" ];
-       then echo "$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)" >> ${LOGFILE}
+       then MESSAGE="$(date)  Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
+          echo "${MESSAGE}" >> ${LOGFILE}
+          notifySlack "Error on CS Server: script `cscheckbotfiles`."
      fi
 fi
+
+
