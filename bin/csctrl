@@ -57,7 +57,7 @@ start() {
     #/home/${CSOWNER}/bin/csgenmapgroups   # generate a mapgroup for all files. Probably not needed when subscribing to a workshop collection
     # Add -condebug -conclearlog do start params to enable logging to ~/csgosv/csgo/console.log
     # Moved to autexec.cfg  +game_type 0 +game_mode 0 +host_workshop_collection %STEAM_WORKSHOP_COLLECTION_ID% +workshop_start_map 125444404 +sv_pure 1
-    ${CSGODIR}/srcds_run -game csgo -usercon -hltv -pidfile ${CSGODIR}/csgosv.pid
+    ${CSGODIR}/srcds_run -game csgo -usercon -tickrate 128 -pidfile ${CSGODIR}/csgosv.pid
 }
 
 stop() {
