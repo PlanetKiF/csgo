@@ -3,9 +3,9 @@
 
 This is the project used to configure the Planet KiF _Counter Strike:Global Offensive_ server. See https://planet-kif.de for more details, in particular how to set up a server in AWS and how to manage it.
 
-This project covers the "userspace" of such a server, in particular that means the configuration and customization of CS.
+This project covers the "userspace" of such a server, in particular the configuration and customization of CS.
 
-Everything that gets modified within the repository will be copied to the sever automatically, so there is no need in working with the files on the server itself. A Github action takes care of the copy job. See file `.github/workflows/deploy.yml`
+Everything that gets modified within the repository will be copied to the server automatically, so there is no need in working with the files on the server itself. A Github action takes care of the copy job. See file `.github/workflows/deploy.yml`
 
 ![Copy files to CSGO Server](https://github.com/PlanetKiF/csgo/workflows/Copy%20files%20to%20CSGO%20Server/badge.svg)
 
