@@ -1,12 +1,51 @@
 # csgo
-Planet KiF CS:GO server configuration.
+## Planet KiF CS:GO server configuration.
 
-https://planet-kif.de
+This is the project used to configure the Planet KiF _Counter Strike:Global Offensive_ server. See https://planet-kif.de for more details, in particular how to set up a server in AWS and how to manage is.
+
+This project covers the "userspace" of such a server, that in means in particular the configuration and customization of CS.
+
+Everything that get's modified within the repository will be copied to the sever automatically, so there is no need in working with the files on the server itself. A Github action takes care of the copy job. See file `.github/workflows/deploy.yml`
 
 ![Copy files to CSGO Server](https://github.com/PlanetKiF/csgo/workflows/Copy%20files%20to%20CSGO%20Server/badge.svg)
 
-Alles im Repository (ausser .git* Dateien und Ordnern) wird nach jedem Commit automatisch auf den Lifeserver kopiert (z.B. `csgosv` in `/home/ubuntu/csgosv`). Ggf. muss danach auf dem Server mit `rcon exec` die entsprechende Config neu eingelesen werden bzw. ein `changelevel` gemacht werden.
+## How to use that for your own server
 
-Ggf. müssen im `bin` Ordner die Ausführungsberechtigungen auf den Skripten gesetzt werden.
+Quite simple:
+  1. install a Linux distribution on your machine. We prefer a Debian based enviuronment, therefore some of the scripts/config's/docs might be depending on this. You can use an AWS instance for this, but this repository is independant of that and you may use an old school hosting server as well. You will need SSH access.
+  2. install `steamcmd` using your distros packet manager. See [docs/setup](https://planet-kif.de/documentation/2021/01/05/setting-up-the-server.html)
+  3. install CSGO using `steamcmd` _into a folder called `csgosv` in the homedirectory of a user_, e.g. `home/ubuntu/csgosv` <br>
+  **_Not_** into `/usr/local/...` or some other shared folder.<br> See [docs/setup](https://planet-kif.de/documentation/2021/01/05/setting-up-the-server.html)
+  4. fork the project
+  5. add the list of _secrets_ given below to your new Github project (or organization if that fits)
+  6. execute the Github action, either be pushing anything to your new repo or by starting it in the Github UI. If eveything went well, then you will find some scripts in a `bin` directory and a few config files were created/modified.
+  7. To make the CSGO server start automatically and to try an update every night add the following lines to the users crontab by logging in and typing `crontab -e`. Validate this using `crontab -l`
+  ```
+  @reboot /home/ubuntu/bin/csctrl start
+  30 5 * * * /home/ubuntu/bin/csctrl upgrade
+  ```
+
+If you restart the instance now (`sudo shutdown -r now`), then the server should start the CSGO server during its startup.
 
 
+## Needed secrets
+  * `CSGO_HOST` <br>
+     The hostname (or ip (not encouraged)) of your instance, e.g. `cs.planet-kif.de`
+  * `CSGO_KEY` <br>
+     The SSH private key used to connect to the server. The copy action will use this for an `rsync`, for example. You will need to add the corresponding public key to the linux machine user running the CS server.
+  * `CSGO_USERNAME` <br>
+     The username of the user, where you installed the CSGO server to. For example `ubuntu` whith its home directory in `/home/ubuntu`
+  * `RCON_PASSWORD` <br>
+     The CS sver will use this RCON password for remote administration using the in game console.
+  * `SERVER_PASSWORD` <br>
+     Client that want to connect to the CSGO server will need this password to connect.
+  * `SLACK_INFORMER_WEBHOOK` <br>
+     This webhook will be used to inform a Slack channel of update problems.
+  * `SLACK_WEBHOOK_URL` <br>
+     This webhook will be used by the Github deploment action to inform a Slack channel of the job's result.
+  * `STEAM_ACCOUNT` <br>
+     The steam account the CSGO server is associated to.
+  * `STEAM_WEBAPI_AUTHKEY` <br>
+     To be able to use Steam Workshop maps you will need to provide a WebAPI key. See  [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
+  * `STEAM_WORKSHOP_COLLECTION_ID` <br>
+     The server will use the map collection on the Steam Workshop defined by this id. See [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
