@@ -7,48 +7,7 @@ TARGET=${CSGODIR}/csgo/botprofile.db
 EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 LOGFILE=/home/${CSOWNER}/updatelog.txt
 
-
-notifySlack() {
-
-  SLACKTEXT="$1"
-  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
-
-  curl -X POST -H 'Content-type: application/json' --data "{
-      \"text\": \":bomb: ${SLACKTEXT}\",
-      \"blocks\": [
-          {
-              \"type\": \"section\",
-              \"text\": {
-                  \"type\": \"mrkdwn\",
-                  \"text\": \":bomb: ${SLACKTEXT}\"
-              }
-          },
-          {
-              \"type\": \"divider\"
-          },
-          {
-              \"type\": \"context\",
-              \"elements\": [
-                  {
-                      \"type\": \"plain_text\",
-                      \"text\": \"tail -3 updatelog.txt\",
-                      \"emoji\": true
-                  }
-              ]
-          },
-          {
-              \"type\": \"section\",
-              \"text\": {
-                  \"type\": \"mrkdwn\",
-                  \"text\": \"\`\`\`${UPDATELOG}\`\`\`\"
-              }
-          },
-          {
-              \"type\": \"divider\"
-          }
-      ]
-   }" %SLACK_INFORMER_WEBHOOK%
-}
+. libnotifyslack
 
 
 
