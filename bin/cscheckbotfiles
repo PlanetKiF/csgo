@@ -14,14 +14,14 @@ LOGFILE=/home/${CSOWNER}/updatelog.txt
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})
 
 if [ -z "${DIFFRENCES}" ];
-  then echo "$(date)  ${0} Restoring ${TARGET} by ${SOURCE}" >> ${LOGFILE}
+  then echo "$(date)  $(basename ${0}) Restoring ${TARGET} by ${SOURCE}" >> ${LOGFILE}
      cp -f ${SOURCE} ${TARGET}
   else  DIFFRENCES2=$(diff ${SOURCE} ${TARGET})
      if [ -n "${DIFFRENCES2}" ];
-       then MESSAGE="$(date)  ${0} Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
+       then MESSAGE="$(date)  $(basename ${0}) Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
           echo "${MESSAGE}" >> ${LOGFILE}
           notifySlack '*Error on CS Server: script `cscheckbotfiles`.*'
-       else echo "$(date)  ${0} Nothing to do,  ${TARGET} and ${SOURCE} are equal." >> ${LOGFILE}
+       else echo "$(date)  $(basename ${0}) Nothing to do,  ${TARGET} and ${SOURCE} are equal." >> ${LOGFILE}
      fi
 fi
 
