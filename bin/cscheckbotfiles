@@ -7,7 +7,7 @@ TARGET=${CSGODIR}/csgo/botprofile.db
 EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 LOGFILE=/home/${CSOWNER}/updatelog.txt
 
-. libnotifyslack
+. libshellscipts
 
 
 
@@ -20,7 +20,7 @@ if [ -z "${DIFFRENCES}" ];
      if [ -n "${DIFFRENCES2}" ];
        then MESSAGE="$(date)  $(basename ${0}) Problem, could not update the 'botprofile.db'. The original file is modified (probably by an update.)"
           echo "${MESSAGE}" >> ${LOGFILE}
-          notifySlack '*Error on CS Server: script `cscheckbotfiles`.*'
+          notifyMessengers '*Error on CS Server: script `cscheckbotfiles`.*'
        else echo "$(date)  $(basename ${0}) Nothing to do,  ${TARGET} and ${SOURCE} are equal." >> ${LOGFILE}
      fi
 fi
