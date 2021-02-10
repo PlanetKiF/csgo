@@ -38,3 +38,24 @@ notifySlack() {
       ]
    }" %SLACK_INFORMER_WEBHOOK%
 }
+
+
+notifyDiscord() {
+  SLACKTEXT="$1"
+  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT}\",  \"embeds\": [{
+    \"title\": \"tail -3 updatelog.txt\",
+    \"description\": \"\`\`\`bash\n${UPDATELOG}\`\`\`\"
+  }]}" \
+  "%NOTIFICATION_WEBHOOK%"
+}
+
+
+
+notifyMessengers() {
+  notifySlack $1
+  notifyDiscord $1
+}
