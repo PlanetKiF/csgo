@@ -133,5 +133,5 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.NOTIFICATION_WEBHOOK }}
         DISCORD_USERNAME: "CS:GO"
       uses: Ilshidur/action-discord@master
-      with:
+      #with:
         #args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed to ${{ secrets.CSGO_HOST }}.'
