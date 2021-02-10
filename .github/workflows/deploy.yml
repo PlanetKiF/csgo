@@ -125,3 +125,12 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
         MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
       if: always() # Pick up events even if the job fails or is canceled.
+
+    ########################################################################################
+    # Informs Discord channel
+    name: Discord notification
+    env:
+      DISCORD_WEBHOOK: ${{ secrets.NOTIFICATION_WEBHOOK }}/github
+    uses: Ilshidur/action-discord@master
+    with:
+      args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
