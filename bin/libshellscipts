@@ -46,15 +46,13 @@ notifySlack() {
 notifyDiscord() {
   HOOK=%NOTIFICATION_WEBHOOK%
   if [ -n ${HOOK} ];
+  then
     SLACKTEXT="$1"
     UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
 
     curl -X POST \
         -H "Content-Type: application/json" \
-        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT}\",  \"embeds\": [{
-            \"title\": \"tail -3 updatelog.txt\",
-            \"description\": \"\`\`\`bash\n${UPDATELOG}\`\`\`\"
-        }]}" \
+        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT} tail -3 updatelog.txt\n\`\`\`bash\n${UPDATELOG}\`\`\`\"}" \
     "${HOOK}"
   fi
 }
