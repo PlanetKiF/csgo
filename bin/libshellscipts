@@ -1,56 +1,62 @@
 notifySlack() {
-  SLACKTEXT="$1"
-  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+  HOOK=%SLACK_INFORMER_WEBHOOK%
+  if [ -n ${HOOK} ];
+   then SLACKTEXT="$1"
+    UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
 
-  curl -X POST -H 'Content-type: application/json' --data "{
-      \"text\": \":bomb: ${SLACKTEXT}\",
-      \"blocks\": [
-          {
-              \"type\": \"section\",
-              \"text\": {
-                  \"type\": \"mrkdwn\",
-                  \"text\": \":bomb: ${SLACKTEXT}\"
-              }
-          },
-          {
-              \"type\": \"divider\"
-          },
-          {
-              \"type\": \"context\",
-              \"elements\": [
-                  {
-                      \"type\": \"plain_text\",
-                      \"text\": \"tail -3 updatelog.txt\",
-                      \"emoji\": true
-                  }
-              ]
-          },
-          {
-              \"type\": \"section\",
-              \"text\": {
-                  \"type\": \"mrkdwn\",
-                  \"text\": \"\`\`\`${UPDATELOG}\`\`\`\"
-              }
-          },
-          {
-              \"type\": \"divider\"
-          }
-      ]
-   }" %SLACK_INFORMER_WEBHOOK%
+    curl -X POST -H 'Content-type: application/json' --data "{
+        \"text\": \":bomb: ${SLACKTEXT}\",
+        \"blocks\": [
+            {
+                \"type\": \"section\",
+                \"text\": {
+                    \"type\": \"mrkdwn\",
+                    \"text\": \":bomb: ${SLACKTEXT}\"
+                }
+            },
+            {
+                \"type\": \"divider\"
+            },
+            {
+                \"type\": \"context\",
+                \"elements\": [
+                    {
+                        \"type\": \"plain_text\",
+                        \"text\": \"tail -3 updatelog.txt\",
+                        \"emoji\": true
+                    }
+                ]
+            },
+            {
+                \"type\": \"section\",
+                \"text\": {
+                    \"type\": \"mrkdwn\",
+                    \"text\": \"\`\`\`${UPDATELOG}\`\`\`\"
+                }
+            },
+            {
+                \"type\": \"divider\"
+            }
+        ]
+    }" ${HOOK}
+  fi
 }
 
 
 notifyDiscord() {
-  SLACKTEXT="$1"
-  UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+  HOOK=%NOTIFICATION_WEBHOOK%
+  if [ -n ${HOOK} ];
+    SLACKTEXT="$1"
+    UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
 
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT}\",  \"embeds\": [{
-    \"title\": \"tail -3 updatelog.txt\",
-    \"description\": \"\`\`\`bash\n${UPDATELOG}\`\`\`\"
-  }]}" \
-  "%NOTIFICATION_WEBHOOK%"
+    curl -X POST \
+        -H "Content-Type: application/json" \
+        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT}\",  \"embeds\": [{
+            \"title\": \"tail -3 updatelog.txt\",
+            \"description\": \"\`\`\`bash\n${UPDATELOG}\`\`\`\"
+        }]}" \
+    "${HOOK}"
+  fi
 }
 
 
