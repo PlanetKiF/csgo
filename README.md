@@ -39,14 +39,18 @@ If you restart the instance now (`sudo shutdown -r now`), then the server should
   * `RCON_PASSWORD` <br>
      The CS server will use this RCON password for remote administration using the in-game console.
   * `SERVER_PASSWORD` <br>
-     Clients/players that want to connect to the CSGO server will need this password to connect.
-  * `SLACK_INFORMER_WEBHOOK` <br>
-     This webhook will be used to inform a Slack channel of update problems.
-  * `SLACK_WEBHOOK_URL` <br>
-     This webhook will be used by the Github deployment action to inform a Slack channel of the job's result.
+     Clients/players that want to connect to the CSGO server will need this password to connect.~~
+  * ~~`SLACK_INFORMER_WEBHOOK`~~ <br>
+     ~~This webhook will be used to inform a Slack channel of update problems.~~
+  * ~~`SLACK_WEBHOOK_URL`~~ <br>
+     ~~This webhook will be used by the Github deployment action to inform a Slack channel of the job's result.~~
+ *  `NOTIFICATION_WEBHOOK`
+    This webhook will be used by the Github deployment action to inform a Discord channel of the job's result.
   * `STEAM_ACCOUNT` <br>
      The steam account the CSGO server is associated to.
   * `STEAM_WEBAPI_AUTHKEY` <br>
      To be able to use Steam Workshop maps you will need to provide a WebAPI key. See  [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
   * `STEAM_WORKSHOP_COLLECTION_ID` <br>
      The server will use the map collection on the Steam Workshop defined by this id. See [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
+
+You may use Slack instead of Discord to receive all the notifications in a channel. Simply provide the secrets/webhooks above and de-uncomment the Slack paragraph in the Github Action definition ('.github/workflows/deploy.yml`).
