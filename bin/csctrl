@@ -4,7 +4,6 @@ CSOWNER=%CSGO_USERNAME%
 CSGODIR=/home/${CSOWNER}/csgosv
 STEAMCMD=/usr/games/steamcmd
 RCODE=0
-LOGFILE=/home/${CSOWNER}/updatelog.txt
 
 
 . libshellscipts
@@ -46,9 +45,9 @@ update() {
 upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Works for as long as there is no sudo passwd
    update -f
    if [ x${RCODE} == x0 ];
-     then echo "`date`  CS updated, restarting instance..." >> /home/${CSOWNER}/updatelog.txt
+     then log "CS updated, restarting instance..."
          sudo shutdown -r now
-     else echo "`date`  error during CS update, not restarted. Code: ${RCODE}" >> ${LOGFILE}
+     else log "Error during CS update, not restarted. Code: ${RCODE}"
         notifyMessengers '*Error on CS Server during update. (Script `csctrl`)*'
    fi
 }

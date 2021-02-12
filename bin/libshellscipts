@@ -1,8 +1,15 @@
+LOGFILE=/home/${CSOWNER}/updatelog.txt
+
+log() {
+  echo "$(date)  $(basename ${0}): $1" >> ${LOGFILE}
+}
+
+
 notifySlack() {
   HOOK=%SLACK_INFORMER_WEBHOOK%
-  if [ -n ${HOOK} ];
+  if [ "x" != "x${HOOK}" ];
    then SLACKTEXT="$1"
-    UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+    UPDATELOG="$(tail -5 ${LOGFILE} | awk '{print}' ORS='\\n')"
 
     curl -X POST -H 'Content-type: application/json' --data "{
         \"text\": \":bomb: ${SLACKTEXT}\",
@@ -22,7 +29,7 @@ notifySlack() {
                 \"elements\": [
                     {
                         \"type\": \"plain_text\",
-                        \"text\": \"tail -3 updatelog.txt\",
+                        \"text\": \"tail -5 updatelog.txt\",
                         \"emoji\": true
                     }
                 ]
@@ -45,14 +52,13 @@ notifySlack() {
 
 notifyDiscord() {
   HOOK=%NOTIFICATION_WEBHOOK%
-  if [ -n ${HOOK} ];
-  then
-    SLACKTEXT="$1"
-    UPDATELOG="$(tail -3 ${LOGFILE} | awk '{print}' ORS='\\n ')"
+  if [ "x" != "x${HOOK}" ];
+  then TEXT="$1"
+    UPDATELOG="$(tail -5 ${LOGFILE} | awk '{print}' ORS='\\n')"
 
     curl -X POST \
         -H "Content-Type: application/json" \
-        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${SLACKTEXT} tail -3 updatelog.txt\n\`\`\`bash\n${UPDATELOG}\`\`\`\"}" \
+        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${TEXT}\n tail -5 updatelog.txt\n\`\`\`bash\n${UPDATELOG}\`\`\`\"}" \
     "${HOOK}"
   fi
 }
@@ -60,6 +66,6 @@ notifyDiscord() {
 
 
 notifyMessengers() {
-  notifySlack $1
-  notifyDiscord $1
+  notifySlack "$1"
+  notifyDiscord "$1"
 }

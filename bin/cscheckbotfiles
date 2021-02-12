@@ -5,13 +5,10 @@ CSGODIR=/home/${CSOWNER}/csgosv
 SOURCE=${CSGODIR}/csgo/botprofile.db.custom
 TARGET=${CSGODIR}/csgo/botprofile.db
 EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
-LOGFILE=/home/${CSOWNER}/updatelog.txt
+
 
 . libshellscipts
 
-log() {
-  echo "$(date)  $(basename ${0}): $1" >> ${LOGFILE}
-}
 
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})
 
