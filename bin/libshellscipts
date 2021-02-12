@@ -58,7 +58,7 @@ notifyDiscord() {
 
     curl -X POST \
         -H "Content-Type: application/json" \
-        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${TEXT}\n tail -5 updatelog.txt\n\`\`\`bash\n${UPDATELOG}\`\`\`\"}" \
+        -d "{\"username\": \"CS:GO\", \"content\": \":bomb: ${TEXT}\n tail -5 updatelog.txt\n\`\`\`apache\n${UPDATELOG}\`\`\`\"}" \
     "${HOOK}"
   fi
 }
