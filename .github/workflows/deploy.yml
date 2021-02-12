@@ -140,11 +140,11 @@ jobs:
     #  uses: Ilshidur/action-discord@master
       #with:
         #args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed to ${{ secrets.CSGO_HOST }}.'
-   ########################################################################################
-   # Informs Discord channel
-   - name: Send status to Discord
-     uses: nebularg/actions-discord-webhook@v1
-     with:
-       webhook_url: ${{ secrets.NOTIFICATION_WEBHOOK }} # required
-       status: ${{ job.status }} # optional, this is the default
-     if: always() # or failure() or success()
+    ########################################################################################
+    # Informs Discord channel
+    - name: Send status to Discord
+      uses: nebularg/actions-discord-webhook@v1
+      with:
+        webhook_url: ${{ secrets.NOTIFICATION_WEBHOOK }} # required
+        status: ${{ job.status }} # optional, this is the default
+      if: always() # or failure() or success()
