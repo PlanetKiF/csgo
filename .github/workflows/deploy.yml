@@ -143,8 +143,8 @@ jobs:
    ########################################################################################
    # Informs Discord channel
    - name: Send status to Discord
-      uses: nebularg/actions-discord-webhook@v1
-      with:
-        webhook_url: ${{ secrets.NOTIFICATION_WEBHOOK }} # required
-        status: ${{ job.status }} # optional, this is the default
-      if: always() # or failure() or success()
+     uses: nebularg/actions-discord-webhook@v1
+     with:
+       webhook_url: ${{ secrets.NOTIFICATION_WEBHOOK }} # required
+       status: ${{ job.status }} # optional, this is the default
+     if: always() # or failure() or success()
