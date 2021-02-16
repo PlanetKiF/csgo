@@ -6,7 +6,7 @@ STEAMCMD=/usr/games/steamcmd
 RCODE=0
 
 
-. libshellscipts
+. /home/${CSOWNER}/bin/libshellscipts
 
 
 
