@@ -16,6 +16,7 @@ start() {
     # Add -condebug -conclearlog do start params to enable logging to ~/csgosv/csgo/console.log
     log "start: Starting CS:GO dedicated server."
     ${CSGODIR}/srcds_run -game csgo -usercon -pidfile ${CSGODIR}/csgosv.pid
+    nohup ${CSGODIR}/srcds_run -game csgo -usercon -pidfile ${CSGODIR}/csgosv.pid &
 }
 
 stop() {
