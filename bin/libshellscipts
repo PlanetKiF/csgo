@@ -1,4 +1,4 @@
-LOGFILE=/home/${CSOWNER}/updatelog.txt
+LOGFILE=/home/${CSOWNER}/csgolog.txt
 
 log() {
   echo "$(date)  $(basename ${0}): $1" >> ${LOGFILE}

@@ -14,10 +14,12 @@ start() {
     /home/${CSOWNER}/bin/csgenmapchange   # generate the mapchange.cfg with convenience aliases
     #/home/${CSOWNER}/bin/csgenmapgroups   # generate a mapgroup for all files. Probably not needed when subscribing to a workshop collection
     # Add -condebug -conclearlog do start params to enable logging to ~/csgosv/csgo/console.log
+    log "start: Starting CS:GO dedicated server."
     ${CSGODIR}/srcds_run -game csgo -usercon -pidfile ${CSGODIR}/csgosv.pid
 }
 
 stop() {
+    log "stop: Stopping CS:GO dedicated server."
     ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
     RCODE=$?
     killer -f
@@ -25,17 +27,21 @@ stop() {
 
 killer() {
    if [ "x$1" == "x-f" ];
-     then killall -9 srcds_linux srcds_run
-     else kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
+     then  log "kill -f: Stopping all CS:GO processes"
+        killall -9 srcds_linux srcds_run
+     else log "kill: Stopping CS:GO dedicated server, remaining CS:GO control process should start a new instance."
+        kill -9 $(cat ${CSGODIR}/csgosv.pid) # but will restart
   fi
 }
 
 
 update() {
    if [ "x$1" == "x-f" ];
-     then ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
+     then log "update -f: updating and validating CS:GO"
+         ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
          RCODE=$?
-     else ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+     else log "update: updating CS:GO"
+         ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
          RCODE=$?
     fi
     /home/${CSOWNER}/bin/cscheckbotfiles
@@ -44,10 +50,10 @@ update() {
 upgrade() { # autoupdate & restarts script, needs to be run as root (sudo). Works for as long as there is no sudo passwd
    update -f
    if [ x${RCODE} == x0 ];
-     then log "CS updated, restarting instance..."
+     then log "upgrade: CS:GO updated, restarting instance..."
          sudo shutdown -r now
-     else log "Error during CS update, not restarted. Code: ${RCODE}"
-        notifyMessengers '*Error on CS Server during update. (Script `csctrl`)*'
+     else log "upgrade: Error during CS:GO update, not restarted. Code: ${RCODE}"
+        notifyMessengers '*Error on CS:GO Server during update. (Script `csctrl`)*'
    fi
 }
 
