@@ -7,7 +7,7 @@ TARGET=${CSGODIR}/csgo/botprofile.db
 EXPECTED=${CSGODIR}/csgo/botprofile.db.lastorig
 
 
-. libshellscipts
+. /home/${CSOWNER}/bin/libshellscipts
 
 
 DIFFRENCES=$(diff ${EXPECTED} ${TARGET})

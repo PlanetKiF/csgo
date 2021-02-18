@@ -11,6 +11,7 @@ GENSTART=$(grep -n "generate start" ${SOURCE}|cut -f 1 -d ':')
 GENEND=$(grep -n "generate end" ${SOURCE}|cut -f 1 -d ':')
 TAILEND=$((${LINESC}-${GENEND}+1))
 
+. /home/${CSOWNER}/bin/libshellscipts
 
 genal() {
     MAP=`basename $1`
@@ -28,3 +29,5 @@ find ${CSGODIR}/csgo/maps -name *.bsp -exec  bash -c 'genal "$0" ${tmpfile}' {} 
 tail -n ${TAILEND} ${SOURCE} >> ${tmpfile}
 mv ${tmpfile}  ${TARGET}
 rm -f ${tmpfile}
+
+log "Generated the mapgroup automaticalls."
