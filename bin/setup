@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+CSOWNER=%CSGO_USERNAME%
+
 #copy NGINX configuration & deactivated default config
 sudo cp -f /home/${CSOWNER}/site/nginx/sites-available/* /etc/nginx/sites-available
 sudo rm -f /etc/nginx/sites-enabled/*
