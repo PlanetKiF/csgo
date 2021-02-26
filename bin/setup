@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#copy NGINX configuration & deactivated default config
+sudo cp -f /home/${CSOWNER}/site/nginx/sites-available/* /etc/nginx/sites-available
+sudo rm -f /etc/nginx/sites-enabled/*
+sudo ln -s /etc/nginx/sites-available/kif.conf /etc/nginx/sites-enabled/kif.conf
+
+#copy html tree, disabling existing default index file
+sudo mv -f /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.disabled
+sudo rsync -r /home/${CSOWNER}/site/html/* /var/www/html/

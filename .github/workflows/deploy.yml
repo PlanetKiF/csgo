@@ -79,6 +79,12 @@ jobs:
     - name: Find and Replace server password
       uses: jacobtomlinson/gha-find-replace@master
       with:
+        find: "%PLAYER_PASSWORD%"
+        replace: "${{ secrets.PLAYER_PASSWORD }}"
+        include: "site/html/local/"
+    - name: Find and Replace server steam account
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
         find: "%STEAM_ACCOUNT%"
         replace: "${{ secrets.STEAM_ACCOUNT }}"
         include: "csgosv/"
@@ -117,6 +123,15 @@ jobs:
         remote_host: ${{ secrets.CSGO_HOST }}
         remote_user: ${{ secrets.CSGO_USERNAME }}
         remote_key: ${{ secrets.CSGO_KEY }}
+
+    ########################################################################################
+    - name: Run setup script over SSH
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command:  /home/${{ secrets.CSGO_USERNAME }}/bin/setup
+        host: ${{ secrets.CSGO_HOST  }}
+        username: ${{ secrets.CSGO_USERNAME }}
+        privateKey: ${{ secrets.CSGO_KEY }}
 
     ########################################################################################
     ## Informs slack channel (disabled as we are using Discord now)
