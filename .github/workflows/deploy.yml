@@ -79,6 +79,12 @@ jobs:
     - name: Find and Replace server password
       uses: jacobtomlinson/gha-find-replace@master
       with:
+        find: "%CSGO_HOST%"
+        replace: "${{ secrets.CSGO_HOST }}"
+        include: "site/html/local/"
+    - name: Find and Replace server adress
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
         find: "%PLAYER_PASSWORD%"
         replace: "${{ secrets.PLAYER_PASSWORD }}"
         include: "site/html/local/"
