@@ -12,4 +12,4 @@ sudo mv -f /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debia
 sudo rsync -r /home/${CSOWNER}/site/html/* /var/www/html/
 
 #restart NGINX to read new config file
-sudo sysctl restart nginx
+sudo systemctl restart nginx
