@@ -10,3 +10,6 @@ sudo ln -s /etc/nginx/sites-available/kif.conf /etc/nginx/sites-enabled/kif.conf
 #copy html tree, disabling existing default index file
 sudo mv -f /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.disabled
 sudo rsync -r /home/${CSOWNER}/site/html/* /var/www/html/
+
+#restart NGINX to read new config file
+sudo sysctl restart nginx
