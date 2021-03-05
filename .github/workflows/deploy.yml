@@ -76,11 +76,17 @@ jobs:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
         include: "csgosv/"
-    - name: Find and Replace server password
+    - name: Find and Replace server address
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "%CSGO_HOST%"
         replace: "${{ secrets.CSGO_HOST }}"
+        include: "site/html/local/|site/nginx/sites-available/"
+    - name: Find and Replace google analytics ID
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%ANALYTICS_ID%"
+        replace: "${{ secrets.ANALYTICS_ID }}"
         include: "site/html/local/"
     - name: Find and Replace server adress
       uses: jacobtomlinson/gha-find-replace@master
