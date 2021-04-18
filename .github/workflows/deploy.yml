@@ -75,7 +75,7 @@ jobs:
       with:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
-        include: "csgosv/"
+        include: "csgosv/|site/html/local/"
     - name: Find and Replace server address
       uses: jacobtomlinson/gha-find-replace@master
       with:
@@ -87,12 +87,6 @@ jobs:
       with:
         find: "%ANALYTICS_ID%"
         replace: "${{ secrets.ANALYTICS_ID }}"
-        include: "site/html/local/"
-    - name: Find and Replace server adress
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "%PLAYER_PASSWORD%"
-        replace: "${{ secrets.PLAYER_PASSWORD }}"
         include: "site/html/local/"
     - name: Find and Replace server steam account
       uses: jacobtomlinson/gha-find-replace@master
