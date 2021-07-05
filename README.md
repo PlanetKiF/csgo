@@ -14,9 +14,9 @@ Everything that gets modified within the repository will be copied to the server
 Quite simple:
 
   1. install a Linux distribution on your machine. We prefer a Debian based environment, therefore some of the scripts/config's/docs might be depending on this. You can use an AWS instance for this, but this repository is independent of that and you may use an old school hosting server as well. You will need SSH access.
-  2. install `steamcmd` using your distros package manager. See [docs/setup](https://planet-kif.de/documentation/2021/01/05/setting-up-the-server.html)
+  2. install `steamcmd` using your distros package manager. See [docs/setup](https://planet-kif.de/docs/setting-up-the-server.html)
   3. install CSGO using `steamcmd` _into a folder called `csgosv` in the homedirectory of a user_, e.g. `home/ubuntu/csgosv` <br>
-  **_Not_** into `/usr/local/...` or some other shared folder.<br> See [docs/setup](https://planet-kif.de/documentation/2021/01/05/setting-up-the-server.html)
+  **_Not_** into `/usr/local/...` or some other shared folder.<br> See [docs/setup](https://planet-kif.de/docs/setting-up-the-server.html)
   4. fork the project
   5. add the list of _secrets_ given below to your new Github project (or organization if that fits)
   6. execute the Github action, either by pushing anything to your new repo or by starting it in the Github UI. If everything went well, then you will find some scripts in a `bin` directory and a few config files were created/modified.
@@ -49,8 +49,8 @@ If you restart the instance now (`sudo shutdown -r now`), then the server should
   * `STEAM_ACCOUNT` <br>
      The steam account the CSGO server is associated to.
   * `STEAM_WEBAPI_AUTHKEY` <br>
-     To be able to use Steam Workshop maps you will need to provide a WebAPI key. See  [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
+     To be able to use Steam Workshop maps you will need to provide a WebAPI key. See  [docs/workshop](https://planet-kif.de/docs/workshop.html)
   * `STEAM_WORKSHOP_COLLECTION_ID` <br>
-     The server will use the map collection on the Steam Workshop defined by this id. See [docs/workshop](https://planet-kif.de/documentation/2021/01/20/workshop.html)
+     The server will use the map collection on the Steam Workshop defined by this id. See [docs/workshop](https://planet-kif.de/docs/workshop.html)
 
 You may use Slack instead of Discord to receive all the notifications in a channel. Simply provide the secrets/webhooks above and de-uncomment the Slack paragraph in the Github Action definition ('.github/workflows/deploy.yml`).
