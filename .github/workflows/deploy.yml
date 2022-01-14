@@ -58,6 +58,12 @@ jobs:
         find: "%STEAM_WORKSHOP_COLLECTION_ID%"
         replace: "${{ secrets.STEAM_WORKSHOP_COLLECTION_ID }}"
         include: "bin/|csgosv/"
+    - name: Find and Replace the Slack webhook for notifications in scripts
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "%SLACK_INFORMER_WEBHOOK%"
+        replace: "${{ secrets.SLACK_INFORMER_WEBHOOK }}"
+        include: "bin/"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@master
       with:
