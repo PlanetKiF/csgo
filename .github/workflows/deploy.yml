@@ -23,7 +23,7 @@ jobs:
       id: date
       run: echo "KIFCLAN_DATE=$(date +'%a, %d.%m.%Y %H:%M:%S %Z')" >> $GITHUB_ENV
     #- name: Get current time
-    #  uses: 1466587594/get-current-time@v2
+    #  uses: 1466587594/get-current-time@0.1.4
     #  id: current-time
     #  with:
     #    format: YYYYMMDD-HH
@@ -41,61 +41,61 @@ jobs:
     ########################################################################################
     # Replaces secrets / time in checkout files
     - name: Find and Replace date/time
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%DATE_TIME%"
         replace: "${{ env.KIFCLAN_DATE }}"
         include: "csgosv/"
     - name: Find and Replace username in scripts
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%CSGO_USERNAME%"
         replace: "${{ secrets.CSGO_USERNAME }}"
         include: "bin/"
     - name: Find and Replace the workshop map collection id in scripts and configs
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%STEAM_WORKSHOP_COLLECTION_ID%"
         replace: "${{ secrets.STEAM_WORKSHOP_COLLECTION_ID }}"
         include: "bin/|csgosv/"
     - name: Find and Replace rcon password
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%RCON_PASSWORD%"
         replace: "${{ secrets.RCON_PASSWORD }}"
         include: "csgosv/"
     - name: Find and Replace server password
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
         include: "csgosv/|site/html/local/"
     - name: Find and Replace server address
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%CSGO_HOST%"
         replace: "${{ secrets.CSGO_HOST }}"
         include: "site/html/local/|site/nginx/sites-available/"
     - name: Find and Replace google analytics ID
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%ANALYTICS_ID%"
         replace: "${{ secrets.ANALYTICS_ID }}"
         include: "site/html/local/"
     - name: Find and Replace server steam account
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%STEAM_ACCOUNT%"
         replace: "${{ secrets.STEAM_ACCOUNT }}"
         include: "csgosv/"
     - name: Find and Replace webapi_authkey
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%STEAM_WEBAPI_AUTHKEY%"
         replace: "${{ secrets.STEAM_WEBAPI_AUTHKEY }}"
         include: "csgosv/"
     - name: Find and Replace Discord webhook
-      uses: jacobtomlinson/gha-find-replace@v2
+      uses: jacobtomlinson/gha-find-replace@0.1.4
       with:
         find: "%NOTIFICATION_WEBHOOK%"
         replace: "${{ secrets.NOTIFICATION_WEBHOOK }}"
