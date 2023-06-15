@@ -80,7 +80,7 @@ jobs:
         replace: "${{ secrets.STEAM_WEBAPI_AUTHKEY }}"
         include: "csgosv/**"
     - name: Find and Replace Slack webhook
-      uses: jacobtomlinson/gha-find-replace@@v3
+      uses: jacobtomlinson/gha-find-replace@v3
       with:
         find: "%SLACK_INFORMER_WEBHOOK%"
         replace: "${{ secrets.SLACK_INFORMER_WEBHOOK }}"
