@@ -42,7 +42,7 @@ jobs:
       with:
         find: "%STEAM_WORKSHOP_COLLECTION_ID%"
         replace: "${{ secrets.STEAM_WORKSHOP_COLLECTION_ID }}"
-        include: "bin/**,csgosv/**"
+        include: "{bin/**,csgosv/**}"
     - name: Find and Replace rcon password
       uses: jacobtomlinson/gha-find-replace@v3
       with:
@@ -54,7 +54,7 @@ jobs:
       with:
         find: "%SERVER_PASSWORD%"
         replace: "${{ secrets.SERVER_PASSWORD }}"
-        include: "csgosv/**,site/html/local/**"
+        include: "{csgosv/**,site/html/local/**}"
     - name: Find and Replace server address
       uses: jacobtomlinson/gha-find-replace@v3
       with:
