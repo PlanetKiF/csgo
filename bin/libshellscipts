@@ -7,7 +7,7 @@ log() {
 
 notifySlack() {
   HOOK=%SLACK_INFORMER_WEBHOOK%
-  if [ "x" != "x${HOOK}" ];
+  if [ "x" != "x${HOOK}" && "x%SLACK_INFORMER_WEBHOOK%" != "x${HOOK}" ];
    then SLACKTEXT="$1"
     UPDATELOG="$(tail -5 ${LOGFILE} | awk '{print}' ORS='\\n')"
 
@@ -52,7 +52,7 @@ notifySlack() {
 
 notifyDiscord() {
   HOOK=%NOTIFICATION_WEBHOOK%
-  if [ "x" != "x${HOOK}" ];
+  if [ "x" != "x${HOOK}" && "x%NOTIFICATION_WEBHOOK%" != "x${HOOK}" ];
   then TEXT="$1"
     UPDATELOG="$(tail -5 ${LOGFILE} | awk '{print}' ORS='\\n')"
 
