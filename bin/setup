@@ -8,7 +8,10 @@ sudo rm -f /etc/nginx/sites-enabled/*
 sudo ln -s /etc/nginx/sites-available/kif.conf /etc/nginx/sites-enabled/kif.conf
 
 #copy html tree, disabling existing default index file
-sudo mv -f /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.disabled
+HTMLINDEX=/var/www/html/index.nginx-debian.html
+if [ -f ${HTMLINDEX} ]; then echo 1; else echo 2; fi
+  sudo mv -f ${HTMLINDEX} ${HTMLINDEX}.disabled
+fi
 sudo rsync -r /home/${CSOWNER}/site/html/* /var/www/html/
 
 #restart NGINX to read new config file
