@@ -60,7 +60,7 @@ jobs:
       with:
         find: "%CSGO_HOST%"
         replace: "${{ secrets.CSGO_HOST }}"
-        include: "site/html/local/**|site/nginx/sites-available/**"
+        include: "site/**"
     - name: Find and Replace google analytics ID
       uses: jacobtomlinson/gha-find-replace@master
       with:
