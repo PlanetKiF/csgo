@@ -21,7 +21,7 @@ start() {
 
 stop() {
     log "stop: Stopping CS:GO dedicated server."
-    ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR}  +app_stop 740 +quit
+    ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous  +app_stop 740 +quit
     RCODE=$?
     killer -f
 }
@@ -39,10 +39,10 @@ killer() {
 update() {
    if [ "x$1" == "x-f" ];
      then log "update -f: updating and validating CS:GO"
-         ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 validate +quit
+         ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous +app_update 740 validate +quit
          RCODE=$?
      else log "update: updating CS:GO"
-         ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_update 740 +quit
+         ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous +app_update 740 +quit
          RCODE=$?
     fi
     /home/${CSOWNER}/bin/cscheckbotfiles
@@ -76,7 +76,7 @@ case "$1" in
        start
        ;;
     status)
-       ${STEAMCMD} +login anonymous +force_install_dir ${CSGODIR} +app_status 740 +quit
+       ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous +app_status 740 +quit
        ;;
     update)
        update $2
