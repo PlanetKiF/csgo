@@ -41,6 +41,7 @@ update() {
      then log "update -f: updating and validating CS:GO"
          ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous +app_update 740 validate +quit
          RCODE=$?
+         mv -f ${CSGODIR}/bin/libgcc_s.so.1 ${CSGODIR}/bin/off_libgcc_s.so.1_off
      else log "update: updating CS:GO"
          ${STEAMCMD} +force_install_dir ${CSGODIR} +login anonymous +app_update 740 +quit
          RCODE=$?
